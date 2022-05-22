@@ -1,0 +1,64 @@
+from random import choice
+import blackjack_help as help
+cards = {
+    '1': 1,
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9,
+    '10': 10,
+    'J': 10,
+    'Q': 10,
+    'K': 10,
+    'A': 11
+}
+
+player_cards = []
+computer_cards = []
+
+
+def play(card_dic, player_cards, computer_cards):
+    for i in range(2):                                  # first deal
+        player_cards.append(choice(list(card_dic)))
+        computer_cards.append(choice(list(card_dic)))
+
+    p_score = help.calc_score(card_dic, player_cards)
+
+    hit = True
+    while p_score < 21 and hit:                         # Our player will be dealt a new card as long as they haven't reached 21 and wants to hit
+        help.display(player_cards, computer_cards, False)
+        hit = help.deal_or_nodeal()
+        if hit:
+            new_card = choice(list(card_dic))
+            player_cards.append(new_card)
+            p_score += card_dic[new_card]
+
+    if p_score > 21:
+        help.display(player_cards, computer_cards, True)
+        print("You busted!")
+        return
+
+    c_score = help.calc_score(card_dic, computer_cards)
+    while c_score < 16:
+        new_card = choice(list(card_dic))
+        computer_cards.append(new_card)
+        c_score += card_dic[new_card]
+
+    help.display(player_cards, computer_cards, True)
+    if c_score > 21:
+        print("The computer busted! You win!")
+    else:
+        if c_score >= p_score:
+            print("The computer won!")
+        else:
+            print("You won!")
+        print("")
+    return
+
+
+play(cards, player_cards, computer_cards)
+
