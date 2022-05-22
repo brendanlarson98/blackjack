@@ -1,0 +1,26 @@
+def deal_or_nodeal():
+    valid = False
+    while not valid:
+        hit = input("Would you like to be dealt another card? (y/n) ")
+        if hit == 'y' or hit == 'yes' or hit == 'n' or hit == 'no':
+            valid = True
+        else:
+            print("Invalid input. Please type 'y' or 'n'")
+    print()
+    
+    if hit == 'y' or hit == 'yes':
+        return True
+    return False
+
+
+def calc_score(card_dic, player):
+    score = 0
+    for card in player:
+        score += card_dic[card]
+    return score
+
+def display(player_cards, computer_cards, finish):
+    if not finish:
+        print("Your cards:", player_cards, "\nComputer's top card:", computer_cards[0])
+    else:
+        print("Your cards:", player_cards, "\nComputer's cards:", computer_cards)
